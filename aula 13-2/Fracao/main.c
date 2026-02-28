@@ -1,7 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include "Fracao.h"
-#include "Fracao.c"
+
 
 
 
