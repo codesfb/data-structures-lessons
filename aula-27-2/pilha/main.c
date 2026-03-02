@@ -1,0 +1,105 @@
+#include <stdio.h>
+#include <string.h>
+// #define ERROR 0
+// #define SUCCSSES 1
+#include "pilha.h"
+void limparTela(){
+	
+	printf("Precione ENTER para continuar...\n");
+	getchar();
+	getchar();
+	}
+
+
+
+void empilhar(Pilha *p, int valor){
+	int result = push(p, valor);
+  if(result == ERROR){
+    printf("Erro ao empilhar\n" );
+  }else {
+
+    printf("%d  Empilhado com sucesso \n", result);
+  }
+}; 
+
+void desempilhar(Pilha *p, int *valor){
+   int result = pop(p, valor);
+  if(result == ERROR){
+    printf("Erro ao desempilhar\n" );
+  }else {
+
+    printf("%d Desempilhado com sucesso  \n", *valor);
+  }
+}; 
+
+// void limparTela()
+// {
+// #ifdef _WIN32
+//     system("cls");
+// #else
+//     system("clear"); 
+// #endif    
+// }
+
+int main()
+{
+	
+ Pilha *pilha = criarPilha();
+  if(pilha==NULL){
+	printf("Não foi possivel alocar");
+	return 1;  
+	}
+  int opcao;
+  do{
+    printf("Menu:\n");
+    printf("1. Empilhar\n");
+    printf("2. Desempilhar\n");
+    printf("3. Mostrar Pilha\n");
+    printf("4. Mostrar Topo\n");
+    printf("5. Destruir Pilha\n");
+    printf("6. Sair\n");
+    printf("Escolha uma opção: ");
+    
+    scanf("%d", &opcao);
+    
+    switch(opcao) {
+      case 1: {
+        int valor;
+        printf("Digite um valor para empilhar: ");
+        scanf("%d", &valor);
+        empilhar(pilha, valor);
+        break;
+      }
+      case 2: {
+        int valor;
+        desempilhar(pilha, &valor);
+        break;
+      }
+      case 3:
+       mostrarPilha(pilha);
+        break;
+      case 4:
+        int valor;
+        peek(pilha, &valor);
+        printf("Topo: %d\n", valor);
+        break;
+      case 5:
+        destroy(pilha);
+        printf("Pilha liberada e recriada");
+        pilha=criarPilha();
+        break;
+      case 6:
+        printf("Saindo...\n");
+        destroy(pilha);
+        break;
+      default:
+        printf("Opção inválida!\n");
+    }
+    
+    limparTela();
+    
+  } while(opcao != 6);
+	
+
+  
+}
