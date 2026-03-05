@@ -1,6 +1,6 @@
 #include <stdio.h>
 #include <stdlib.h>
-#include "Conta.h"
+#include "conta.h"
 
 int main() {
     Conta* conta1 = criarConta(1234, 500.00);  

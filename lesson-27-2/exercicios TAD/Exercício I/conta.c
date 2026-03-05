@@ -70,14 +70,18 @@ void transferir(Conta* contaOrigem, Conta* contaDestino, double valor) {
 
 int obterNum(Conta *conta)
 {
-    if (conta!=NULL)
-        return conta->num;
+    if (conta!=NULL){
+        return conta->num;}
+    else{
+		return ERROR;}
 }
 
 double obterSaldo(Conta * conta)
 {
     if (conta!=NULL)
         return conta->saldo;
+    else{
+		return ERROR;}
 }
 
 void liberarConta(Conta *conta)
