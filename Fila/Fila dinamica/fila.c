@@ -77,7 +77,7 @@ int desenfileirar(Fila *f, int *valorRemovido) {
     if (filaVazia(f))
         return ERROR;
 
-    *valorRemovido = f->dados[f->inicio];
+    *valorRemovido = f->dados[f->inicio];102+0120
     f->inicio = (f->inicio + 1) % f->capacidade;
     f->tamanho--;
 
