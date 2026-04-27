@@ -9,3 +9,4 @@ void percurso_pos_ordem(Arvore *arvore);
 void destruir_arvore(Arvore* arvore);
 int maior(Arvore* a);
 int menor(Arvore* a);
+void encontrar(Arvore* a, int valor);

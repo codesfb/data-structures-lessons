@@ -154,12 +154,13 @@ void destruir_arvore(Arvore* arvore) {
   }
 }
 
-//exercicio 1 a 
+//exercicio 1 Maior e menor da arvore 
+//por recursão porem acredito ser melhor de forma iteraiva
 int  go_right(No* raiz){
    if (raiz== NULL) return 0; 
     if(raiz->dir == NULL) return raiz->valor;
     else
-    go_right(raiz->dir);
+    return go_right(raiz->dir);
      
 }
 
@@ -172,7 +173,7 @@ int  go_left(No* raiz){
    if (raiz== NULL) return 0; 
     if(raiz->esq == NULL) return raiz->valor;
     else
-    go_left(raiz->esq);
+    return go_left(raiz->esq);
      
 }
 
@@ -182,4 +183,68 @@ int menor(Arvore* a){
     return go_left(a->raiz);
 }
 
-//1b
+//1b encontrar valor mais seus filhos imediatos;
+
+void percorrer(No* raiz){
+
+
+}
+
+
+No* busca_iterativa(No* raiz, int valor) {
+    while (raiz != NULL && raiz->valor != valor) {
+        if (valor < raiz->valor)
+            raiz = raiz->esq;
+        else
+            raiz = raiz->dir;
+    }
+    return raiz;
+}
+
+
+No* encontrar_em_ordem(No* raiz, int valor) {
+  if (!raiz) return NULL;
+  if(raiz->valor == valor) return raiz;
+
+  if(valor < raiz->valor)
+    return encontrar_em_ordem(raiz->esq, valor);
+  else 
+    return encontrar_em_ordem(raiz->dir, valor);
+
+  }
+
+//encontra valor e retorna filhos se tiver.
+void encontrar(Arvore* a, int valor){
+    if (a == NULL || a->raiz == NULL) {
+    printf("Árvore vazia");
+    return;
+    }
+
+    No* aux = encontrar_em_ordem(a->raiz, valor);
+
+    if(aux == NULL) {
+      printf("Valor não encontrado");
+      return;
+      
+    };
+  
+    No* filho_esq = aux->esq;
+    No* filho_dir = aux->dir;
+        
+
+    if (aux->esq != NULL) 
+        printf("\nFilho a esquerda: %d",filho_esq->valor);
+    else 
+        printf("\nNao possui filho a esquerda.");
+
+    if (aux->dir != NULL) 
+        printf("\nFilho a direita: %d", filho_dir->valor);
+    else 
+        printf("\nNao possui filho a direita.");
+    
+    printf("\n");
+
+
+
+}
+
