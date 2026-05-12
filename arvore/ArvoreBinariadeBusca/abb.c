@@ -185,10 +185,6 @@ int menor(Arvore* a){
 
 //1b encontrar valor mais seus filhos imediatos;
 
-void percorrer(No* raiz){
-
-
-}
 
 
 No* busca_iterativa(No* raiz, int valor) {
@@ -248,3 +244,32 @@ void encontrar(Arvore* a, int valor){
 
 }
 
+//c
+
+int somar_vetor(int *v, int n) {
+ if (n == 0)
+ return 0;
+ return *v + somar_vetor(v + 1, n - 1);
+}
+
+
+
+int conta_em_ordem(No* raiz, int *valor) {
+ 
+  if (raiz) {
+    conta_em_ordem(raiz->esq);
+
+    conta_em_ordem(raiz->dir);
+  }
+
+ 
+}
+
+
+int  percurso_de_contagem_em_ordem(Arvore *arvore){
+  if (arvore == NULL || arvore->raiz == NULL) {
+    printf("Árvore vazia");
+    return 0;
+  }
+  return conta_em_ordem(arvore->raiz);
+}

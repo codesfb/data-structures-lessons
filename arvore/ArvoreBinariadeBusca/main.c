@@ -35,7 +35,8 @@ int main()
     printf("\n7 - Menor");
     printf("\n8 - (Testes)Prencher arvore com valores padrão");
     printf("\n9 - Encontrar valor e retornar esquerda ou direita");
-    printf("\n10 - Liberar Árvore");
+    printf("\n10 - Contar elementos da arvore");
+    printf("\n11 - Liberar Árvore");
     printf("\n0 - Sair");
     printf("\n\nEscolha sua opção: ");
     scanf("%d", &op);
@@ -91,6 +92,10 @@ int main()
       encontrar(arvore,valor);
       break;
     case 10:
+      int qtd = percurso_de_contagem_em_ordem(arvore);
+      printf("%d",qtd);
+      break;
+    case 11:
       destruir_arvore(arvore);
       break;
     case 0:
