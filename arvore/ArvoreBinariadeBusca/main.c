@@ -79,9 +79,9 @@ int main()
 
     case 8:
 
-      int valores_padrao[7]={3,5,9,7,8,10,11};
+      int valores_padrao[15]={1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14 , 18 };
 
-      for(int i=0;i<7;i++){
+      for(int i=0;i<15;i++){
         inserir(arvore, valores_padrao[i]);
       }
       printf("\nValores padrão inseridos com sucesso"); 
@@ -92,8 +92,7 @@ int main()
       encontrar(arvore,valor);
       break;
     case 10:
-      int qtd = percurso_de_contagem_em_ordem(arvore);
-      printf("%d",qtd);
+      contagem_em_ordem(arvore);
       break;
     case 11:
       destruir_arvore(arvore);

@@ -2,274 +2,303 @@
 #include <stdlib.h>
 #include "abb.h"
 
-typedef struct no {
+typedef struct no
+{
   int valor;
   struct no *esq;
   struct no *dir;
 } No;
 
-struct arvore {
+struct arvore
+{
   No *raiz;
 };
 
-Arvore* criar_arvore() {
-  Arvore *arvore = (Arvore*) malloc(sizeof(Arvore));
+Arvore *criar_arvore()
+{
+  Arvore *arvore = (Arvore *)malloc(sizeof(Arvore));
   if (arvore)
-     arvore->raiz = NULL;
+    arvore->raiz = NULL;
   return arvore;
 }
 
-No* criar_no(int valor) {
-  No *no = (No*) malloc(sizeof(No));
-  if (no){
-     no->valor = valor;
-     no->esq = NULL;
-     no->dir = NULL;
+No *criar_no(int valor)
+{
+  No *no = (No *)malloc(sizeof(No));
+  if (no)
+  {
+    no->valor = valor;
+    no->esq = NULL;
+    no->dir = NULL;
   }
   return no;
 }
 
-No* inserir_no(No* raiz, int valor) {
-  if (raiz == NULL) 
-      return criar_no(valor);
-  
+No *inserir_no(No *raiz, int valor)
+{
+  if (raiz == NULL)
+    return criar_no(valor);
 
-  if (valor < raiz->valor) 
-      raiz->esq = inserir_no(raiz->esq, valor);
-   else if (valor > raiz->valor) 
-      raiz->dir = inserir_no(raiz->dir, valor);
+  if (valor < raiz->valor)
+    raiz->esq = inserir_no(raiz->esq, valor);
+  else if (valor > raiz->valor)
+    raiz->dir = inserir_no(raiz->dir, valor);
 
   return raiz;
 }
 
-void inserir(Arvore* arvore, int valor) {
+void inserir(Arvore *arvore, int valor)
+{
   arvore->raiz = inserir_no(arvore->raiz, valor);
 }
 
-No* remover_no(No* raiz, int valor) {
+No *remover_no(No *raiz, int valor)
+{
   if (raiz == NULL)
-      return NULL;
+    return NULL;
 
-  if (valor < raiz->valor) {
-      raiz->esq = remover_no(raiz->esq, valor);
-  } else if (valor > raiz->valor) {
-      raiz->dir = remover_no(raiz->dir, valor);
-  } else {
-      // Caso 1: sem filhos
-      if (raiz->esq == NULL && raiz->dir == NULL) {
-          free(raiz);
-          return NULL;
-      }
-      // Caso 2: um filho
-      else if (raiz->esq == NULL) {
-          No* temp = raiz->dir;
-          free(raiz);
-          return temp;
-      }
-      else if (raiz->dir == NULL) {
-          No* temp = raiz->esq;
-          free(raiz);
-          return temp;
-      }
-      // Caso 3: dois filhos
-      else {
-          //menor valor da subarvore direita 
-          No* sucessor = raiz->dir;
-          while (sucessor->esq != NULL)
-                 sucessor = sucessor->esq;
-         
-          raiz->valor = sucessor->valor;
-          raiz->dir = remover_no(raiz->dir, sucessor->valor);
-      }
+  if (valor < raiz->valor)
+  {
+    raiz->esq = remover_no(raiz->esq, valor);
+  }
+  else if (valor > raiz->valor)
+  {
+    raiz->dir = remover_no(raiz->dir, valor);
+  }
+  else
+  {
+    // Caso 1: sem filhos
+    if (raiz->esq == NULL && raiz->dir == NULL)
+    {
+      free(raiz);
+      return NULL;
+    }
+    // Caso 2: um filho
+    else if (raiz->esq == NULL)
+    {
+      No *temp = raiz->dir;
+      free(raiz);
+      return temp;
+    }
+    else if (raiz->dir == NULL)
+    {
+      No *temp = raiz->esq;
+      free(raiz);
+      return temp;
+    }
+    // Caso 3: dois filhos
+    else
+    {
+      // menor valor da subarvore direita
+      No *sucessor = raiz->dir;
+      while (sucessor->esq != NULL)
+        sucessor = sucessor->esq;
+
+      raiz->valor = sucessor->valor;
+      raiz->dir = remover_no(raiz->dir, sucessor->valor);
+    }
   }
 
   return raiz;
 }
 
-void remover(Arvore* arvore, int valor) {
+void remover(Arvore *arvore, int valor)
+{
   arvore->raiz = remover_no(arvore->raiz, valor);
 }
 
-
-void pre_ordem(No* raiz) {
-  if (raiz) {
-      printf("%d ", raiz->valor);
-      pre_ordem(raiz->esq);
-      pre_ordem(raiz->dir);
+void pre_ordem(No *raiz)
+{
+  if (raiz)
+  {
+    printf("%d ", raiz->valor);
+    pre_ordem(raiz->esq);
+    pre_ordem(raiz->dir);
   }
 }
 
-void percurso_pre_ordem(Arvore *arvore){
-  if (arvore == NULL || arvore->raiz == NULL) {
+void percurso_pre_ordem(Arvore *arvore)
+{
+  if (arvore == NULL || arvore->raiz == NULL)
+  {
     printf("Árvore vazia");
     return;
   }
   pre_ordem(arvore->raiz);
 }
 
-void em_ordem(No* raiz) {
-  if (raiz) {
-      em_ordem(raiz->esq);
-      printf("%d ", raiz->valor);
-      em_ordem(raiz->dir);
+void em_ordem(No *raiz)
+{
+  if (raiz)
+  {
+    em_ordem(raiz->esq);
+    printf("%d ", raiz->valor);
+    em_ordem(raiz->dir);
   }
 }
 
-void percurso_em_ordem(Arvore *arvore){
-  if (arvore == NULL || arvore->raiz == NULL) {
+void percurso_em_ordem(Arvore *arvore)
+{
+  if (arvore == NULL || arvore->raiz == NULL)
+  {
     printf("Árvore vazia");
     return;
   }
   em_ordem(arvore->raiz);
 }
 
-void pos_ordem(No* raiz) {
-  if (raiz) {
-      pos_ordem(raiz->esq);
-      pos_ordem(raiz->dir);
-      printf("%d ", raiz->valor);
+void pos_ordem(No *raiz)
+{
+  if (raiz)
+  {
+    pos_ordem(raiz->esq);
+    pos_ordem(raiz->dir);
+    printf("%d ", raiz->valor);
   }
 }
 
-void percurso_pos_ordem(Arvore *arvore){
-  if (arvore == NULL || arvore->raiz == NULL) {
+void percurso_pos_ordem(Arvore *arvore)
+{
+  if (arvore == NULL || arvore->raiz == NULL)
+  {
     printf("Árvore vazia");
     return;
   }
   pos_ordem(arvore->raiz);
 }
 
-void destruir_nos(No* raiz) {
-  if (raiz) {
-      destruir_nos(raiz->esq);
-      destruir_nos(raiz->dir);
-      free(raiz);
+void destruir_nos(No *raiz)
+{
+  if (raiz)
+  {
+    destruir_nos(raiz->esq);
+    destruir_nos(raiz->dir);
+    free(raiz);
   }
 }
 
-void destruir_arvore(Arvore* arvore) {
-  if (arvore) {
-      destruir_nos(arvore->raiz);
-      free(arvore);
+void destruir_arvore(Arvore *arvore)
+{
+  if (arvore)
+  {
+    destruir_nos(arvore->raiz);
+    free(arvore);
   }
 }
 
-//exercicio 1 Maior e menor da arvore 
-//por recursão porem acredito ser melhor de forma iteraiva
-int  go_right(No* raiz){
-   if (raiz== NULL) return 0; 
-    if(raiz->dir == NULL) return raiz->valor;
-    else
+// exercicio 1 Maior e menor da arvore
+// por recursão porem acredito ser melhor de forma iteraiva
+int go_right(No *raiz)
+{
+  if (raiz == NULL)
+    return 0;
+  if (raiz->dir == NULL)
+    return raiz->valor;
+  else
     return go_right(raiz->dir);
-     
 }
 
-int maior(Arvore* a){
-    if(!a) return 0;
-    return go_right(a->raiz);
+int maior(Arvore *a)
+{
+  if (!a)
+    return 0;
+  return go_right(a->raiz);
 }
 
-int  go_left(No* raiz){
-   if (raiz== NULL) return 0; 
-    if(raiz->esq == NULL) return raiz->valor;
-    else
+int go_left(No *raiz)
+{
+  if (raiz == NULL)
+    return 0;
+  if (raiz->esq == NULL)
+    return raiz->valor;
+  else
     return go_left(raiz->esq);
-     
 }
 
-
-int menor(Arvore* a){
-    if(!a) return 0;
-    return go_left(a->raiz);
+int menor(Arvore *a)
+{
+  if (!a)
+    return 0;
+  return go_left(a->raiz);
 }
 
-//1b encontrar valor mais seus filhos imediatos;
+// 1b encontrar valor mais seus filhos imediatos;
 
-
-
-No* busca_iterativa(No* raiz, int valor) {
-    while (raiz != NULL && raiz->valor != valor) {
-        if (valor < raiz->valor)
-            raiz = raiz->esq;
-        else
-            raiz = raiz->dir;
-    }
-    return raiz;
-}
-
-
-No* encontrar_em_ordem(No* raiz, int valor) {
-  if (!raiz) return NULL;
-  if(raiz->valor == valor) return raiz;
-
-  if(valor < raiz->valor)
-    return encontrar_em_ordem(raiz->esq, valor);
-  else 
-    return encontrar_em_ordem(raiz->dir, valor);
-
+No *busca_iterativa(No *raiz, int valor)
+{
+  while (raiz != NULL && raiz->valor != valor)
+  {
+    if (valor < raiz->valor)
+      raiz = raiz->esq;
+    else
+      raiz = raiz->dir;
   }
+  return raiz;
+}
 
-//encontra valor e retorna filhos se tiver.
-void encontrar(Arvore* a, int valor){
-    if (a == NULL || a->raiz == NULL) {
+No *encontrar_em_ordem(No *raiz, int valor)
+{
+  if (!raiz)
+    return NULL;
+  if (raiz->valor == valor)
+    return raiz;
+
+  if (valor < raiz->valor)
+    return encontrar_em_ordem(raiz->esq, valor);
+  else
+    return encontrar_em_ordem(raiz->dir, valor);
+}
+
+// encontra valor e retorna filhos se tiver.
+void encontrar(Arvore *a, int valor)
+{
+  if (a == NULL || a->raiz == NULL)
+  {
     printf("Árvore vazia");
     return;
-    }
-
-    No* aux = encontrar_em_ordem(a->raiz, valor);
-
-    if(aux == NULL) {
-      printf("Valor não encontrado");
-      return;
-      
-    };
-  
-    No* filho_esq = aux->esq;
-    No* filho_dir = aux->dir;
-        
-
-    if (aux->esq != NULL) 
-        printf("\nFilho a esquerda: %d",filho_esq->valor);
-    else 
-        printf("\nNao possui filho a esquerda.");
-
-    if (aux->dir != NULL) 
-        printf("\nFilho a direita: %d", filho_dir->valor);
-    else 
-        printf("\nNao possui filho a direita.");
-    
-    printf("\n");
-
-
-
-}
-
-//c
-
-int somar_vetor(int *v, int n) {
- if (n == 0)
- return 0;
- return *v + somar_vetor(v + 1, n - 1);
-}
-
-
-
-int conta_em_ordem(No* raiz, int *valor) {
- 
-  if (raiz) {
-    conta_em_ordem(raiz->esq);
-
-    conta_em_ordem(raiz->dir);
   }
 
- 
+  No *aux = encontrar_em_ordem(a->raiz, valor);
+
+  if (aux == NULL)
+  {
+    printf("Valor não encontrado");
+    return;
+  };
+
+  No *filho_esq = aux->esq;
+  No *filho_dir = aux->dir;
+
+  if (aux->esq != NULL)
+    printf("\nFilho a esquerda: %d", filho_esq->valor);
+  else
+    printf("\nNao possui filho a esquerda.");
+
+  if (aux->dir != NULL)
+    printf("\nFilho a direita: %d", filho_dir->valor);
+  else
+    printf("\nNao possui filho a direita.");
+
+  printf("\n");
 }
 
+// c contar elementos da arvore
 
-int  percurso_de_contagem_em_ordem(Arvore *arvore){
-  if (arvore == NULL || arvore->raiz == NULL) {
-    printf("Árvore vazia");
+int conta_elementos(No *raiz){
+  if (raiz == NULL)
     return 0;
-  }
-  return conta_em_ordem(arvore->raiz);
+  else
+    return 1 + conta_elementos(raiz->esq) + conta_elementos(raiz->dir);
+}
+
+void contagem_em_ordem(Arvore *a){
+  if (a == NULL || a->raiz == NULL)
+  {
+    printf("Árvore vazia");
+    return;
+  }else{
+    printf("Quantidade de elementos: %d",conta_elementos(a->raiz));
+
+  } 
+
 }

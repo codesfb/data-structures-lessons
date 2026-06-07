@@ -10,4 +10,4 @@ void destruir_arvore(Arvore* arvore);
 int maior(Arvore* a);
 int menor(Arvore* a);
 void encontrar(Arvore* a, int valor);
-int  percurso_de_contagem_em_ordem(Arvore *arvore);
+void  contagem_em_ordem(Arvore *arvore);
